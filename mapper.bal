@@ -1,8 +1,7 @@
 import ballerinax/health.fhir.r4;
 import ballerinax/health.fhir.r4.uscore501;
 
-public isolated function mapData(Patient payload) returns uscore501:USCorePatientProfile => {
-    id: payload.patientId,
+public isolated function mapData(CustomPatient payload) returns uscore501:USCorePatientProfile => {
     name: [
         {
             given: [payload.firstName],
@@ -15,13 +14,15 @@ public isolated function mapData(Patient payload) returns uscore501:USCorePatien
         'source: payload.originSource
     },
     text: {
-        div: payload.description.details,
+        div: payload.description.details ?: "",
         status: <r4:StatusCode>payload.description.status
 
     },
     gender: <uscore501:USCorePatientProfileGender>payload.gender
 ,
-    identifier: [],
+    identifier: [
+        {system: payload.identifiers[0].id_type.codes[0].system_source, value: payload.identifiers[0].id_value}
+    ],
     address: from var locatoionDetailItem in payload.locatoionDetail
         select {
             country: locatoionDetailItem.nation,

@@ -1,4 +1,4 @@
-public type Patient record {
+public type CustomPatient record {
     string patientType;
     string patientId;
     string version;
@@ -10,7 +10,7 @@ public type Patient record {
     string lastName;
     string gender;
     LocatoionDetail[] locatoionDetail;
-    
+
 };
 
 public type Identifier record {
@@ -29,7 +29,7 @@ public type Code record {
 
 public type Description record {
     string status;
-    string details;
+    string details?;
 };
 
 public type LocatoionDetail record {
@@ -39,5 +39,10 @@ public type LocatoionDetail record {
     string zipCode?;
     string identifier?;
     string province?;
+};
+
+public type ResponseResource record{
+    string resourceId;
+    string version;
 };
 
