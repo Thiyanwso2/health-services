@@ -22,8 +22,6 @@ import ballerinax/health.fhir.r4.uscore501;
 import ballerinax/health.clients.fhir;
 import ballerinax/health.fhir.r4.parser;
 import ballerina/log;
-import ballerinax/health.fhir.r4.validator;
-
 
 configurable string client_id = ?;
 configurable string client_secret = ?;
@@ -123,33 +121,3 @@ service / on new fhirr4:Listener(9090, apiConfig) {
         return r4:createFHIRError("Not implemented", r4:ERROR, r4:INFORMATIONAL, httpStatusCode = http:STATUS_NOT_IMPLEMENTED);
     }
 }
-
-# A service representing a network-accessible API
-# bound to port `9090`.
-service / on new http:Listener(9091) {
-
-    # Description.
-    #
-    # + payload - parameter description
-    # + return - return value description
-    resource function post sync(@http:Payload CustomPatient payload) returns r4:FHIRError|uscore501:USCorePatientProfile {
-        // Send a response back to the caller.
-        uscore501:USCorePatientProfile mapDataResult = mapData(payload);
-
-        r4:FHIRValidationError? validate = validator:validate(mapDataResult, uscore501:USCorePatientProfile);
-        if validate is r4:FHIRValidationError {
-            return r4:createFHIRError(validate.message(), r4:ERROR, r4:INVALID, cause = validate.cause(), errorType = r4:VALIDATION_ERROR, httpStatusCode = http:STATUS_BAD_REQUEST);
-        }
-        // log:printInfo(mapDataResult.toBalString());
-        fhir:FHIRResponse createResult = check create(mapDataResult.toJson());
-
-        ResponseResource|error resourceResult = createResult.'resource.cloneWithType(ResponseResource);
-
-        if resourceResult is ResponseResource{
-            mapDataResult.id = resourceResult.resourceId;
-        }
-
-        return mapDataResult;
-    }
-}
-
