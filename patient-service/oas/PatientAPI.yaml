@@ -14,7 +14,7 @@ tags:
 - name: Patient
 - name: 4.0.1
 paths:
-  /fhir/r4/Patient:
+  /:
     get:
       tags:
       - GET
@@ -46,7 +46,7 @@ paths:
       security:
       - default: []
       x-auth-type: Application & Application User
-  /fhir/r4/Patient/{id}:
+  /{id}:
     get:
       tags:
       - GET
