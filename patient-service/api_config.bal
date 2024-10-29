@@ -122,6 +122,6 @@ final r4:ResourceAPIConfig apiConfig = {
     authzConfig: (),
     auditConfig: { 
         enabled : true, 
-        auditServiceUrl: "http://audit-service-1478525900:9093"
+        auditServiceUrl: "http://audit-service-3847061127:9093"
     }
 };
