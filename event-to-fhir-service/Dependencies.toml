@@ -5,7 +5,7 @@
 
 [ballerina]
 dependencies-toml-version = "2"
-distribution-version = "2201.8.6"
+distribution-version = "2201.8.5"
 
 [[package]]
 org = "ballerina"
@@ -283,7 +283,7 @@ modules = [
 [[package]]
 org = "ballerina"
 name = "time"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
@@ -423,7 +423,21 @@ modules = [
 
 [[package]]
 org = "ballerinax"
-name = "sync.api"
+name = "kafka"
+version = "3.10.2"
+dependencies = [
+	{org = "ballerina", name = "crypto"},
+	{org = "ballerina", name = "jballerina.java"},
+	{org = "ballerina", name = "uuid"},
+	{org = "ballerinai", name = "observe"}
+]
+modules = [
+	{org = "ballerinax", packageName = "kafka", moduleName = "kafka"}
+]
+
+[[package]]
+org = "wso2"
+name = "event_to_fhir"
 version = "1.0.0"
 dependencies = [
 	{org = "ballerina", name = "http"},
@@ -434,9 +448,10 @@ dependencies = [
 	{org = "ballerinax", name = "health.clients.fhir"},
 	{org = "ballerinax", name = "health.fhir.r4"},
 	{org = "ballerinax", name = "health.fhir.r4.uscore501"},
-	{org = "ballerinax", name = "health.fhir.r4.validator"}
+	{org = "ballerinax", name = "health.fhir.r4.validator"},
+	{org = "ballerinax", name = "kafka"}
 ]
 modules = [
-	{org = "ballerinax", packageName = "sync.api", moduleName = "sync.api"}
+	{org = "wso2", packageName = "event_to_fhir", moduleName = "event_to_fhir"}
 ]
 

@@ -56,7 +56,7 @@ service / on new fhirr4:Listener(9090, apiConfig) {
     }
 
     // Search for resources based on a set of criteria.
-    isolated resource function get fhir/r4/Patient (r4:FHIRContext fhirContext) returns r4:Bundle|r4:OperationOutcome|r4:FHIRError {
+    isolated resource function get fhir/r4/Patient(r4:FHIRContext fhirContext) returns r4:Bundle|r4:OperationOutcome|r4:FHIRError {
         fhir:FHIRResponse searchResult = check search("Patient", getQueryParamsMap(fhirContext.getRequestSearchParameters()));
 
         do {
@@ -70,7 +70,7 @@ service / on new fhirr4:Listener(9090, apiConfig) {
     }
 
     // Create a new resource.
-    isolated resource function post fhir/r4/Patient (r4:FHIRContext fhirContext, Patient patient) returns Patient|r4:OperationOutcome|r4:FHIRError {
+    isolated resource function post fhir/r4/Patient(r4:FHIRContext fhirContext, Patient patient) returns Patient|r4:OperationOutcome|r4:FHIRError {
         fhir:FHIRResponse response = check create(patient.toJson());
         
         ResponseResource|error resourceResult = response.'resource.cloneWithType(ResponseResource);

@@ -1,4 +1,13 @@
-public type CustomPatient record {
+
+public type HealthDataEvent record {
+    string eventId;
+    string timestamp;
+    string dataType?;
+    string origin?;
+    anydata payload?;
+};
+
+public type Patient record {
     string patientType;
     string patientId;
     string version;
@@ -10,7 +19,6 @@ public type CustomPatient record {
     string lastName;
     string gender;
     LocatoionDetail[] locatoionDetail;
-
 };
 
 public type Identifier record {
