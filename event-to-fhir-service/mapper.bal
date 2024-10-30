@@ -28,7 +28,6 @@ public isolated function mapToFhir(string dataType, anydata payload) returns any
     }
 }
 
-
 # Dedicated function to map patient data to US Core Patient Profile
 #
 # + payload - patient data in custom format
@@ -64,6 +63,7 @@ public isolated function mapPatient(Patient payload) returns uscore501:USCorePat
             state: locatoionDetailItem.province,
             postalCode: locatoionDetailItem.zipCode,
             id: locatoionDetailItem.identifier
-        }
+        },
+    id: payload.patientId
 };
 
