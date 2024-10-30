@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: FHIR CodeSystem Lookup Service
+  version: 1.0.0
+  description: API for performing a CodeSystem Lookup operation in FHIR R4 format.
+
+servers:
+  - url: http://localhost:9090
+
+paths:
+  /fhir/r4/Codesystem/{id}/%24lookup:
+    get:
+      summary: FHIR CodeSystem Lookup by ID
+      description: Lookup a FHIR CodeSystem resource by its ID and retrieve the result as JSON or XML.
+      operationId: lookupCodeSystem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the CodeSystem to lookup.
+      responses:
+        '200':
+          description: Successful CodeSystem Lookup Response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: JSON representation of the CodeSystem lookup result.
+            application/xml:
+              schema:
+                type: string
+                description: XML representation of the CodeSystem lookup result.
+        '400':
+          description: Invalid request due to malformed input.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid ID provided for CodeSystem lookup."
+        '404':
+          description: CodeSystem not found for the given ID.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "CodeSystem not found."
+        '500':
+          description: Server error during CodeSystem lookup.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "An unexpected error occurred."
+
+components:
+  schemas:
+    FHIRError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
