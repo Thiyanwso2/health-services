@@ -17,6 +17,7 @@ import ballerina/log;
 import ballerinax/health.clients.fhir;
 import ballerinax/health.fhir.r4;
 import ballerinax/kafka;
+import ballerina/http;
 
 # Kafka configurations
 configurable string groupId = ?;
@@ -34,6 +35,9 @@ configurable string[] scopes = ?;
 configurable string client_id = ?;
 configurable string client_secret = ?;
 
+# Terminology service configurations
+configurable string terminologyServiceUrl = ?;
+
 final kafka:ConsumerConfiguration consumerConfigs = {
     groupId: groupId,
     topics: [topic],
@@ -43,6 +47,9 @@ final kafka:ConsumerConfiguration consumerConfigs = {
     securityProtocol: kafka:PROTOCOL_SSL,
     secureSocket: {protocol: {name: kafka:PROTOCOL_SSL}, cert: cacert, 'key: {certFile: certPath, keyFile: keyPath}}
 };
+
+// call terminology service
+final http:Client terminologyClient = check new(terminologyServiceUrl);
 
 service on new kafka:Listener(kafkaEndpoint, consumerConfigs) {
 

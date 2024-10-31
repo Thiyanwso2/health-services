@@ -8,7 +8,7 @@ servers:
   - url: http://localhost:9090
 
 paths:
-  /fhir/r4/Codesystem/{id}/%24lookup:
+  /fhir/r4/Codesystem/{id}/lookup:
     get:
       summary: FHIR CodeSystem Lookup by ID
       description: Lookup a FHIR CodeSystem resource by its ID and retrieve the result as JSON or XML.

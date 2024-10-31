@@ -67,3 +67,47 @@ public isolated function mapPatient(Patient payload) returns uscore501:USCorePat
     id: payload.patientId
 };
 
+// public isolated function mapGender(string input) returns r4:CodeableConceptExtension {
+//     string mappedCode;
+//     match input {
+//         "male" => {
+//             mappedCode = "male";
+//         }
+//         "female" => {
+//             mappedCode = "female";
+//         }
+//         "other" => {
+//             mappedCode = "other";
+//         }
+//         "unknown" => {
+//             mappedCode = "unknown";
+//         }
+//         "M" => {
+//             mappedCode = "male";
+//         }
+//         "F" => {
+//             mappedCode = "female";
+//         }
+//         "O" => {
+//             mappedCode = "other";
+//         }
+//         _ => {
+//             mappedCode = "unknown";
+//         }
+//     }
+
+//     //call terminology service
+//     http:Response|http:ClientError unionResult = terminologyClient->/CodeSystem/administrative\-gender/lookup(code = mappedCode);
+    
+//     r4:CodeableConceptExtension genderExtension = {
+//         url: "http://hl7.org/fhir/administrative-gender",
+//         valueCodeableConcept: {
+//             coding: [
+//                 {
+//                     system: "http://hl7.org/fhir/administrative-gender"
+//                 }
+//             ]
+//         }
+//     };
+
+// }
