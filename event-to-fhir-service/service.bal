@@ -64,7 +64,13 @@ service on new kafka:Listener(kafkaEndpoint, consumerConfigs) {
                     log:printInfo(string `FHIR resource mapped: ${mappedData.toJsonString()}`, mappedData = mappedData.toJson());
                     r4:FHIRError|fhir:FHIRResponse response = createResource(mappedData.toJson());
                     if response is fhir:FHIRResponse {
-                        log:printInfo(string `FHIR resource created: ${response.toJsonString()}`, createdResource = response.toJson());
+                        json|xml resourceResult = response.'resource;
+                        if resourceResult is json {
+                            json|error resourceId = resourceResult.resourceId;
+                            if resourceId is json {
+                                log:printInfo(string `FHIR resource created: ${response.toJsonString()}`, createdResourceId = check (<json>response.'resource).resourceId);
+                            }
+                        }
                     }
                 }
             } else {
