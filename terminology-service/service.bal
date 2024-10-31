@@ -12,4 +12,11 @@ service / on new http:Listener(9090) {
         international401:Parameters codeSystemLookUpResult = check codeSystemLookUpGet(ctx, request, id);
         return codeSystemLookUpResult.toJson();
     }
+
+    isolated resource function get fhir/r4/Codesystem(http:RequestContext ctx, http:Request request) returns json|xml|r4:FHIRError {
+        log:printDebug(string `FHIR Terminology request is received. Interaction: CodeSystem Search`);
+
+        r4:Bundle codeSystem = check searchCodeSystem(request);
+        return codeSystem.toJson();
+    }
 }

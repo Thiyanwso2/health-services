@@ -62,6 +62,29 @@ paths:
                   error:
                     type: string
                     example: "An unexpected error occurred."
+  /fhir/r4/CodeSystem:
+    get:
+      summary: Search CodeSystem
+      description: Retrieves a bundle of CodeSystems matching search criteria.
+      responses:
+        '200':
+          description: CodeSystem search successful
+          content:
+            application/json:
+              schema:
+                type: object
+            application/xml:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FHIRError'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/FHIRError'
 
 components:
   schemas:
