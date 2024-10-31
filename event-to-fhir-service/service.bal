@@ -17,6 +17,7 @@ import ballerina/log;
 import ballerinax/health.clients.fhir;
 import ballerinax/health.fhir.r4;
 import ballerinax/kafka;
+import ballerina/http;
 
 # Kafka configurations
 configurable string groupId = ?;
@@ -34,6 +35,8 @@ configurable string[] scopes = ?;
 configurable string client_id = ?;
 configurable string client_secret = ?;
 
+configurable string statusServiceUrl = "http://status-api-1938288175:9090";
+
 final kafka:ConsumerConfiguration consumerConfigs = {
     groupId: groupId,
     topics: [topic],
@@ -43,6 +46,9 @@ final kafka:ConsumerConfiguration consumerConfigs = {
     securityProtocol: kafka:PROTOCOL_SSL,
     secureSocket: {protocol: {name: kafka:PROTOCOL_SSL}, cert: cacert, 'key: {certFile: certPath, keyFile: keyPath}}
 };
+
+// call status service
+final http:Client statusClient = check new(statusServiceUrl);
 
 service on new kafka:Listener(kafkaEndpoint, consumerConfigs) {
 
@@ -70,6 +76,7 @@ service on new kafka:Listener(kafkaEndpoint, consumerConfigs) {
                             if resourceId is json {
                                 log:printInfo(string `FHIR resource created: ${response.toJsonString()}`, createdResourceId = check (<json>response.'resource).resourceId);
                             }
+                            http:Response|http:ClientError statusApiResponse = statusClient->post("/resource-data", response.toJson());
                         }
                     }
                 }
