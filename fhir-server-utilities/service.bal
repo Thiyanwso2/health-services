@@ -8,7 +8,9 @@ service / on new http:Listener(9090) {
 
     isolated resource function get last\-created\-resource() returns json|error {
         lock {
-            return resourceData.clone().get("lastCreated");
+            if resourceData.hasKey("lastCreated") {
+                return resourceData.clone().get("lastCreated");
+            }
         }
     }
 
