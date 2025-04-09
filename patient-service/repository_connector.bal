@@ -14,7 +14,7 @@ http:OAuth2ClientCredentialsGrantConfig ehrSystemAuthConfig = {
 };
 
 fhir:FHIRConnectorConfig ehrSystemConfig = {
-    baseURL: "https://ohfhirrepositorypoc-ohfhirrepositorypoc.fhir.azurehealthcareapis.com/",
+    baseURL: "https://ohfhirrepositorypoc-ohfhirrepositorypoc.fhir.azurehealthcareapis.com",
     mimeType: fhir:FHIR_JSON,
     authConfig : ehrSystemAuthConfig
 };
